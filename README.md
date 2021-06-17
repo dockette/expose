@@ -19,6 +19,8 @@
 
 ## Usage
 
+### Server
+
 Fastest way:
 
 ```
@@ -42,6 +44,23 @@ docker run \
     dockette/expose
 ```
 
+### Client
+
+```
+docker run \
+    -it \
+    --rm \
+    --network=host \
+    -e EXPOSE_HOST=yourdomain.dev \
+    -e EXPOSE_PORT=80 \
+    dockette/expose \
+    share \
+    --subdomain=foo \
+    http://0.0.0.0:5000
+```
+
+> Use http://host.docker.internal:5000 on OSX.
+
 ## Documentation
 
 You can easily setup Expose via environment variables. This is list of default values.
@@ -57,6 +76,27 @@ You can easily setup Expose via environment variables. This is list of default v
 ```
 
 For more details, take a look at Expose's [official documentation](https://expose.beyondco.de/docs/server/starting-the-server).
+
+**How to test it?**
+
+```
+# Server
+docker run -it --rm -p 8000:8000 -e EXPOSE_HOST=expose.local dockette/expose
+```
+
+```
+echo "Hello world" >> index.php
+
+# Application
+php -S http://0.0.0.0:5000 index.php
+```
+
+```
+# Tunnel (Unix)
+docker run -it --rm --network=host -e EXPOSE_HOST=expose.local dockette/expose share --subdomain=foo http://0.0.0.0:5000
+```
+
+> Use http://host.docker.internal:5000 on OSX.
 
 ## Development
 
