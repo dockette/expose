@@ -46,6 +46,7 @@ docker run \
 
 You can easily setup Expose via environment variables. This is list of default values.
 
+```
 - EXPOSE_HOST=localhost         # expose domain
 - EXPOSE_PORT=8000              # expose port
 - EXPOSE_USERNAME=dockette      # dashboard user name
@@ -53,6 +54,7 @@ You can easily setup Expose via environment variables. This is list of default v
 - EXPOSE_TOKEN=                 # expose token
 - EXPOSE_ADMIN=admin            # dashboard subdomain
 - EXPOSE_DB=/data/expose.db     # expose database (for users)
+```
 
 For more details, take a look at Expose's [official documentation](https://expose.beyondco.de/docs/server/starting-the-server).
 
