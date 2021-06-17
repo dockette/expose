@@ -1,0 +1,8 @@
+{
+    "name": "dockette/expose",
+    "description": "Dockerized Expose",
+    "license": "MIT",
+    "require": {
+        "beyondcode/expose": "^1.5"
+    }
+}
