@@ -1,5 +1,13 @@
 DOCKER_IMAGE=dockette/expose
 
+build: docker-build
+
+test:
+	docker run --rm ${DOCKER_IMAGE} --version
+
+run:
+	docker run -it --rm -p 8000:8000 ${DOCKER_IMAGE}
+
 docker-build:
 	docker build --pull -t ${DOCKER_IMAGE} .
 
