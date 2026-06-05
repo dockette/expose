@@ -10,7 +10,7 @@ Dockette Expose builds `dockette/expose`, a Dockerized Beyond Code Expose server
 - Build context: repository root `.` with `Dockerfile`, `entrypoint.sh`, `config.php`, and `php.ini`.
 - Base image: `dockette/debian:buster`.
 - `make build` uses Docker Buildx and `${DOCKER_PLATFORMS:-linux/amd64,linux/arm64}`.
-- Runtime defaults are set by `EXPOSE_HOST`, `EXPOSE_PORT`, `EXPOSE_USERNAME`, `EXPOSE_PASSWORD`, `EXPOSE_TOKEN`, `EXPOSE_ADMIN`, and `EXPOSE_DB`.
+- Runtime defaults are set by `EXPOSE_HOST`, `EXPOSE_PORT`, `EXPOSE_USER`, `EXPOSE_PASSWORD`, `EXPOSE_TOKEN`, `EXPOSE_ADMIN`, and `EXPOSE_DB`.
 - GitHub Actions builds a local test image, runs `make test`, then publishes `latest` through the shared Dockette Docker workflow on `master` and the weekly schedule.
 
 ## Commands

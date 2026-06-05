@@ -27,9 +27,9 @@ Fastest way:
 docker run \
     -it \
     --rm \
-    -p 80:80 \
+    -p 8000:8000 \
     -e EXPOSE_HOST=yourdomain.dev \
-    -e EXPOSE_PORT=80 \
+    -e EXPOSE_PORT=8000 \
     dockette/expose
 ```
 
@@ -39,8 +39,8 @@ Persistent way:
 docker run \
     -it \
     --rm \
-    -p 80:80 \
-    -v $(pwd)/data:/data
+    -p 8000:8000 \
+    -v $(pwd)/data:/data \
     dockette/expose
 ```
 
@@ -52,11 +52,11 @@ docker run \
     --rm \
     --network=host \
     -e EXPOSE_HOST=yourdomain.dev \
-    -e EXPOSE_PORT=80 \
+    -e EXPOSE_PORT=8000 \
     dockette/expose \
     share \
     --subdomain=foo \
-    http://0.0.0.0:5000
+    http://localhost:5000
 ```
 
 > Use http://host.docker.internal:5000 on OSX.
@@ -68,7 +68,7 @@ You can easily setup Expose via environment variables. This is list of default v
 ```
 - EXPOSE_HOST=localhost         # expose domain
 - EXPOSE_PORT=8000              # expose port
-- EXPOSE_USERNAME=dockette      # dashboard user name
+- EXPOSE_USER=dockette          # dashboard user name
 - EXPOSE_PASSWORD=expose        # dashboard user password
 - EXPOSE_TOKEN=                 # expose token
 - EXPOSE_ADMIN=admin            # dashboard subdomain
@@ -88,12 +88,12 @@ docker run -it --rm -p 8000:8000 -e EXPOSE_HOST=expose.local dockette/expose
 echo "Hello world" >> index.php
 
 # Application
-php -S http://0.0.0.0:5000 index.php
+php -S 0.0.0.0:5000 index.php
 ```
 
 ```
 # Tunnel (Unix)
-docker run -it --rm --network=host -e EXPOSE_HOST=expose.local dockette/expose share --subdomain=foo http://0.0.0.0:5000
+docker run -it --rm --network=host -e EXPOSE_HOST=expose.local dockette/expose share --subdomain=foo http://localhost:5000
 ```
 
 > Use http://host.docker.internal:5000 on OSX.
