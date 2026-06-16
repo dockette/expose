@@ -9,10 +9,10 @@
 </p>
 
 <p align=center>
-    <a href="https://hub.docker.com/r/dockette/expose/"><img src="https://img.shields.io/docker/stars/dockette/expose.svg?style=flat-square"></a>
-    <a href="https://hub.docker.com/r/dockette/expose/"><img src="https://img.shields.io/docker/pulls/dockette/expose.svg?style=flat-square"></a>
-    <a href="https://bit.ly/ctteg"><img src="https://img.shields.io/gitter/room/contributte/contributte.svg?style=flat-square"></a>
-    <a href="https://github.com/sponsors/f3l1x"><img src="https://img.shields.io/badge/sponsor-me-brightgreen?style=flat-square"></a>
+   <a href="https://github.com/dockette/expose/actions"><img src="https://github.com/dockette/expose/actions/workflows/docker.yml/badge.svg" alt="GitHub Actions"></a>
+   <a href="https://hub.docker.com/r/dockette/expose"><img src="https://img.shields.io/docker/pulls/dockette/expose.svg" alt="Docker Hub pulls"></a>
+   <a href="https://github.com/sponsors/f3l1x"><img src="https://img.shields.io/badge/sponsor-GitHub%20Sponsors-ea4aaa" alt="GitHub Sponsors"></a>
+   <a href="https://github.com/orgs/dockette/discussions"><img src="https://img.shields.io/badge/support-discussions-6f42c1" alt="Support/Discussions"></a>
 </p>
 
 -----
@@ -27,9 +27,9 @@ Fastest way:
 docker run \
     -it \
     --rm \
-    -p 80:80 \
+    -p 8000:8000 \
     -e EXPOSE_HOST=yourdomain.dev \
-    -e EXPOSE_PORT=80 \
+    -e EXPOSE_PORT=8000 \
     dockette/expose
 ```
 
@@ -39,8 +39,8 @@ Persistent way:
 docker run \
     -it \
     --rm \
-    -p 80:80 \
-    -v $(pwd)/data:/data
+    -p 8000:8000 \
+    -v $(pwd)/data:/data \
     dockette/expose
 ```
 
@@ -52,11 +52,11 @@ docker run \
     --rm \
     --network=host \
     -e EXPOSE_HOST=yourdomain.dev \
-    -e EXPOSE_PORT=80 \
+    -e EXPOSE_PORT=8000 \
     dockette/expose \
     share \
     --subdomain=foo \
-    http://0.0.0.0:5000
+    http://localhost:5000
 ```
 
 > Use http://host.docker.internal:5000 on OSX.
@@ -68,7 +68,7 @@ You can easily setup Expose via environment variables. This is list of default v
 ```
 - EXPOSE_HOST=localhost         # expose domain
 - EXPOSE_PORT=8000              # expose port
-- EXPOSE_USERNAME=dockette      # dashboard user name
+- EXPOSE_USER=dockette          # dashboard user name
 - EXPOSE_PASSWORD=expose        # dashboard user password
 - EXPOSE_TOKEN=                 # expose token
 - EXPOSE_ADMIN=admin            # dashboard subdomain
@@ -88,26 +88,16 @@ docker run -it --rm -p 8000:8000 -e EXPOSE_HOST=expose.local dockette/expose
 echo "Hello world" >> index.php
 
 # Application
-php -S http://0.0.0.0:5000 index.php
+php -S 0.0.0.0:5000 index.php
 ```
 
 ```
 # Tunnel (Unix)
-docker run -it --rm --network=host -e EXPOSE_HOST=expose.local dockette/expose share --subdomain=foo http://0.0.0.0:5000
+docker run -it --rm --network=host -e EXPOSE_HOST=expose.local dockette/expose share --subdomain=foo http://localhost:5000
 ```
 
 > Use http://host.docker.internal:5000 on OSX.
 
-## Development
+## Maintenance
 
-See [how to contribute](https://contributte.org/contributing.html) to this package.
-
-This package is currently maintaining by these authors.
-
-<a href="https://github.com/f3l1x">
-    <img width="80" height="80" src="https://avatars2.githubusercontent.com/u/538058?v=3&s=80">
-</a>
-
------
-
-Consider to [support](https://github.com/sponsors/f3l1x) **f3l1x**. Also thank you for using this package.
+See [how to contribute](https://github.com/dockette/.github/blob/master/CONTRIBUTING.md) to this package. Consider to [support](https://github.com/sponsors/f3l1x) **f3l1x**. Thank you for using this package.
