@@ -1,4 +1,4 @@
-FROM dockette/debian:buster
+FROM dockette/debian:bookworm
 
 LABEL maintainer="sulcmil@gmail.com"
 
@@ -25,7 +25,7 @@ RUN apt update && apt dist-upgrade -y && \
     apt install -y wget curl apt-transport-https ca-certificates git unzip && \
     # PHP DEB.SURY.CZ ##########################################################
     wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg && \
-    echo "deb https://packages.sury.org/php/ buster main" > /etc/apt/sources.list.d/php.list && \
+    echo "deb https://packages.sury.org/php/ bookworm main" > /etc/apt/sources.list.d/php.list && \
     apt update && \
     apt install -y --no-install-recommends \
         php8.0-apcu \
