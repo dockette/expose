@@ -98,6 +98,11 @@ docker run -it --rm --network=host -e EXPOSE_HOST=expose.local dockette/expose s
 
 > Use http://host.docker.internal:5000 on OSX.
 
+## Versions
+
+The release version is the date in [`VERSION`](VERSION). CI pushes `latest` also as `dockette/expose:<VERSION>`.
+To release, run `make release`, commit and push to `master`.
+
 ## Development
 
 See [how to contribute](https://contributte.org/contributing.html) to this package.
