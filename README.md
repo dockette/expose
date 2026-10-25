@@ -17,97 +17,72 @@
 
 -----
 
+[Expose](https://expose.beyondco.de) shares local sites through secure tunnels. It is a PHP app by Beyond Code. This
+image runs the Expose server and client, set up through environment variables.
+
+## Features
+
+- Expose `1.5.1` on PHP 8.0 (Debian bookworm)
+- Server and client in one image: without arguments it runs `expose serve`, arguments (such as `share`) go to `expose`
+- Dashboard on the `admin` subdomain, users stored in `/data/expose.db`
+- Settings through `EXPOSE_*` environment variables
+
 ## Usage
 
-### Server
-
-Fastest way:
-
-```
-docker run \
-    -it \
-    --rm \
-    -p 80:80 \
-    -e EXPOSE_HOST=yourdomain.dev \
-    -e EXPOSE_PORT=80 \
-    dockette/expose
+```sh
+docker run -it --rm -p 80:80 -e EXPOSE_HOST=yourdomain.dev -e EXPOSE_PORT=80 dockette/expose
 ```
 
-Persistent way:
+```sh
+# Server, with the database kept in ./data
+docker run -it --rm -p 80:80 -v $(pwd)/data:/data dockette/expose
 
-```
-docker run \
-    -it \
-    --rm \
-    -p 80:80 \
-    -v $(pwd)/data:/data
-    dockette/expose
-```
+# Client: share a local site as foo.yourdomain.dev (use http://host.docker.internal:5000 on OSX)
+docker run -it --rm --network=host -e EXPOSE_HOST=yourdomain.dev -e EXPOSE_PORT=80 \
+    dockette/expose share --subdomain=foo http://0.0.0.0:5000
 
-### Client
-
-```
-docker run \
-    -it \
-    --rm \
-    --network=host \
-    -e EXPOSE_HOST=yourdomain.dev \
-    -e EXPOSE_PORT=80 \
-    dockette/expose \
-    share \
-    --subdomain=foo \
-    http://0.0.0.0:5000
-```
-
-> Use http://host.docker.internal:5000 on OSX.
-
-## Documentation
-
-You can easily setup Expose via environment variables. This is list of default values.
-
-```
-- EXPOSE_HOST=localhost         # expose domain
-- EXPOSE_PORT=8000              # expose port
-- EXPOSE_USERNAME=dockette      # dashboard user name
-- EXPOSE_PASSWORD=expose        # dashboard user password
-- EXPOSE_TOKEN=                 # expose token
-- EXPOSE_ADMIN=admin            # dashboard subdomain
-- EXPOSE_DB=/data/expose.db     # expose database (for users)
-```
-
-For more details, take a look at Expose's [official documentation](https://expose.beyondco.de/docs/server/starting-the-server).
-
-**How to test it?**
-
-```
-# Server
+# Try it locally: server, a demo app and a tunnel to it
 docker run -it --rm -p 8000:8000 -e EXPOSE_HOST=expose.local dockette/expose
-```
-
-```
 echo "Hello world" >> index.php
-
-# Application
 php -S http://0.0.0.0:5000 index.php
-```
-
-```
-# Tunnel (Unix)
 docker run -it --rm --network=host -e EXPOSE_HOST=expose.local dockette/expose share --subdomain=foo http://0.0.0.0:5000
 ```
 
-> Use http://host.docker.internal:5000 on OSX.
+## Configuration
+
+| Variable          | Default            | Meaning                       |
+|-------------------|--------------------|-------------------------------|
+| `EXPOSE_HOST`     | `localhost`        | expose domain                 |
+| `EXPOSE_PORT`     | `8000`             | expose port                   |
+| `EXPOSE_USERNAME` | `dockette`         | dashboard user name           |
+| `EXPOSE_PASSWORD` | `expose`           | dashboard user password       |
+| `EXPOSE_TOKEN`    |                    | expose token                  |
+| `EXPOSE_ADMIN`    | `admin`            | dashboard subdomain           |
+| `EXPOSE_DB`       | `/data/expose.db`  | expose database (for users)   |
+
+For more details, see the Expose [documentation](https://expose.beyondco.de/docs/server/starting-the-server).
+
+## Versions
+
+| Version | Release |
+|---------|---------|
+| `dockette/expose:YYYY.MM.DD` | release `YYYY.MM.DD` |
+| `dockette/expose:latest` | latest build of `master` |
+
+Releases are listed on [GitHub](https://github.com/dockette/expose/releases).
 
 ## Development
 
-See [how to contribute](https://contributte.org/contributing.html) to this package.
+```sh
+make docker-build   # build the image
+make docker-push    # push the image
+make test-expose    # run the server on port 8000
+make test-server    # open a shell in the image
+make version        # print VERSION
+make release        # set today's date in VERSION
+```
 
-This package is currently maintaining by these authors.
+## Maintenance
 
-<a href="https://github.com/f3l1x">
-    <img width="80" height="80" src="https://avatars2.githubusercontent.com/u/538058?v=3&s=80">
-</a>
-
------
-
-Consider to [support](https://github.com/sponsors/f3l1x) **f3l1x**. Also thank you for using this package.
+See [how to contribute](https://github.com/dockette/.github/blob/master/CONTRIBUTING.md) to this package. Consider to
+[support](https://github.com/sponsors/f3l1x) **f3l1x**. Thank you for using this package.
