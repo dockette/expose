@@ -2,6 +2,8 @@ FROM dockette/debian:bookworm
 
 LABEL maintainer="sulcmil@gmail.com"
 
+ARG EXPOSE_VERSION=1.5.1
+
 # PHP
 ENV PHP_MODS_DIR=/etc/php/8.0/mods-available
 ENV PHP_CLI_DIR=/etc/php/8.0/cli
@@ -42,7 +44,7 @@ RUN apt update && apt dist-upgrade -y && \
     # PHP MOD(s) ###############################################################
     ln -s ${PHP_MODS_DIR}/custom.ini ${PHP_CLI_CONF_DIR}/999-custom.ini && \
     # EXPOSE APP ###############################################################
-    composer create-project beyondcode/expose:1.5.1 /srv --ignore-platform-reqs --no-plugins --no-scripts && \
+    composer create-project beyondcode/expose:${EXPOSE_VERSION} /srv --ignore-platform-reqs --no-plugins --no-scripts && \
     chmod +x /srv/expose && \
     mkdir -p /data && \
     # CLEAN UP #################################################################

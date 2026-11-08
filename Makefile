@@ -1,7 +1,9 @@
 DOCKER_IMAGE=dockette/expose
 
+include VERSION
+
 docker-build:
-	docker build --pull -t ${DOCKER_IMAGE} .
+	docker build --pull --build-arg EXPOSE_VERSION=${EXPOSE_VERSION} -t ${DOCKER_IMAGE} .
 
 docker-push:
 	docker push ${DOCKER_IMAGE}
@@ -20,3 +22,12 @@ test-expose:
 
 test-server:
 	docker run -it --rm -p 8000:8000 --entrypoint /bin/bash ${DOCKER_IMAGE}
+
+.PHONY: version
+version:
+	@echo ${VERSION}
+
+.PHONY: release
+release:
+	@sed -i.bak "s/^VERSION=.*/VERSION=$$(date -u +%Y.%m.%d)/" VERSION && rm VERSION.bak
+	@cat VERSION
